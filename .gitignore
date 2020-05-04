@@ -1,0 +1,7 @@
+*.zip
+project0
+extra/*
+*.gz
+*.tar
+*.tar.gz
+ebook
