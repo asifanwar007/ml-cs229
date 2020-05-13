@@ -5,3 +5,6 @@ extra/*
 *.tar
 *.tar.gz
 ebook
+autograder
+data
+ps1/src/__pycache__
