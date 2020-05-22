@@ -18,8 +18,21 @@ def main(tau, train_path, eval_path):
 
     # *** START CODE HERE ***
     # Fit a LWR model
+    # print(x_train[0], y_train.shape)
+    clf = LocallyWeightedLinearRegression(0.05)
+    clf.fit(x_train, y_train)
+    x_eval, y_eval = util.load_dataset(eval_path, add_intercept=True)
+    pred=clf.predict(x_eval)
+    # print(len(pred))
     # Get MSE value on the validation set
+    mse = (pred-y_eval)
+    mse = mse.T.dot(mse)/mse.shape
+    print(mse)
     # Plot validation predictions on top of training set
+    plt.scatter(x_train[:, 1], y_train, label='training')
+    plt.scatter(x_eval[:,1], pred, label='predicted')
+    plt.legend()
+    plt.show()
     # No need to save predictions
     # Plot data
     # *** END CODE HERE ***
@@ -45,6 +58,9 @@ class LocallyWeightedLinearRegression(LinearModel):
 
         """
         # *** START CODE HERE ***
+        self.x = x
+        self.y = y
+        # print(x[:,1])
         # *** END CODE HERE ***
 
     def predict(self, x):
@@ -57,4 +73,19 @@ class LocallyWeightedLinearRegression(LinearModel):
             Outputs of shape (m,).
         """
         # *** START CODE HERE ***
+        m, n = x.shape
+        w = lambda xi, xii:np.diag(np.exp(-((xi-xii)**2)/(2*(self.tau**2)))) 
+        pred = []
+        for i in range(m):
+            W = w(self.x[:, 1], x[i][1])
+            # print(np.diag(W).shape)
+            t_inv = np.linalg.inv(self.x.T.dot(W).dot(self.x))
+            theta = t_inv.dot(self.x.T).dot(W).dot(self.y)
+            p = theta.dot(x[i])
+            pred.append(p)
+            # l.append(wi)
+        # W = np.array(l)
+        # pred = np.array([ele for ele in pred])
+        pred = np.array(pred)
+        return pred
         # *** END CODE HERE ***

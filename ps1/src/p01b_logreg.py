@@ -17,9 +17,9 @@ def main(train_path, eval_path, pred_path):
     """
     x_train, y_train = util.load_dataset(train_path, add_intercept=True)
     # print(x_train.shape)
-    for i in range(800):
-        if x_train[i][0] == 0:
-            print(x_train[i][0]);
+    # for i in range(800):
+    #     if x_train[i][0] == 0:
+    #         print(x_train[i][0]);
 
     # plt.plot(x_train[0], y_train)
     # plt.show();
