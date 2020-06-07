@@ -86,6 +86,7 @@ def plot(x, y, theta, save_path, correction=1.0):
         correction: Correction factor to apply (Problem 2(e) only).
     """
     # Plot dataset
+    y[y==-1] = 0
     plt.figure()
     plt.plot(x[y == 1, -2], x[y == 1, -1], 'bx', linewidth=2)
     plt.plot(x[y == 0, -2], x[y == 0, -1], 'go', linewidth=2)
@@ -99,6 +100,7 @@ def plot(x, y, theta, save_path, correction=1.0):
     plt.xlabel('x1')
     plt.ylabel('x2')
     plt.savefig(save_path)
+    # plt.show()
 
 
 def plot_contour(predict_fn):
@@ -119,6 +121,8 @@ def plot_points(x, y):
     
     plt.scatter(x_one[:,0], x_one[:,1], marker='x', color='red')
     plt.scatter(x_two[:,0], x_two[:,1], marker='o', color='blue')
+
+
 
 def write_json(filename, value):
     """Write the provided value as JSON to the given filename"""

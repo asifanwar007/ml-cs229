@@ -2,7 +2,7 @@
 
 import util
 import numpy as np
-
+import time
 
 def calc_grad(X, Y, theta):
     """Compute the gradient of the loss with respect to theta."""
@@ -26,9 +26,13 @@ def logistic_regression(X, Y):
         i += 1
         prev_theta = theta
         grad = calc_grad(X, Y, theta)
-        theta = theta - learning_rate * grad
+        new_theta = - (X*grad).sum(axis=0)
+        # theta = theta - learning_rate * grad
+        theta = theta - learning_rate * new_theta
         if i % 10000 == 0:
+            util.plot(X, Y, theta, "P01_lr.jpg")
             print('Finished %d iterations' % i)
+            time.sleep(2)
         if np.linalg.norm(prev_theta - theta) < 1e-15:
             print('Converged in %d iterations' % i)
             break
@@ -36,9 +40,15 @@ def logistic_regression(X, Y):
 
 
 def main():
-    print('==== Training model on data set A ====')
-    Xa, Ya = util.load_csv('../data/ds1_a.csv', add_intercept=True)
-    logistic_regression(Xa, Ya)
+    # print('==== Training model on data set A ====')
+    # Xa, Ya = util.load_csv('../data/ds1_a.csv', add_intercept=False)
+    # util.plot_points(Xa, Ya)
+    # Xb, Yb = util.load_csv('../data/ds1_b.csv', add_intercept=False)
+    # util.plot_points(Xb, Yb)
+
+
+    # Xa, Ya = util.load_csv('../data/ds1_a.csv', add_intercept=True)
+    # logistic_regression(Xa, Ya)
 
     print('\n==== Training model on data set B ====')
     Xb, Yb = util.load_csv('../data/ds1_b.csv', add_intercept=True)
