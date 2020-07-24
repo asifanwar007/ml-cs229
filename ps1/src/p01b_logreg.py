@@ -86,6 +86,11 @@ class LogisticRegression(LinearModel):
             # print(g_x)
             # print(g_x1)
             # print(i)
+            print("\nPrinting Theta\n")
+            print(self.theta_0- theta)
+            print()
+            print(np.linalg.norm(self.theta_0- theta))
+            time.sleep(1)
             if np.linalg.norm(self.theta_0 - theta, ord=1) < self.eps:
                 break
 
